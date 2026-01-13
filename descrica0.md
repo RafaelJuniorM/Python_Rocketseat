@@ -1,3 +1,6 @@
+ dia 12/01/26 - aula finalizado no tempo 54:13
+ dia 13/01/26 - continuar aula no tempo 54:13
+
 ## Métodos de requisição HTTP 
 
 - GET ( Retornar apenas dados )
@@ -13,4 +16,6 @@
 - Mensagens de redirecionamento ( 300 - 399 )
 - Respostas de erro do cliente ( 400 - 499 )
 - Respostas de erro do servidor ( 500 - 599 )
+
+## Documentação da API - Swagger
 
