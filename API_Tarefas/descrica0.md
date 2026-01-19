@@ -1,6 +1,4 @@
- dia 12/01/26 - aula finalizado no tempo 54:13
- dia 13/01/26 - continuar aula no tempo 54:13
- dia 14/01/26 - continuar aula no tempo 1:23:47
+
 ## Métodos de requisição HTTP 
 
 - GET ( Retornar apenas dados )
