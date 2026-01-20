@@ -79,7 +79,7 @@ def get_info_user(user_id):
 @login_required
 def update_user(user_id):
     data = request.json 
-    user = User.query.get(user_id) 
+    user = User.query.get(user_id)
 
     if user and data.get("password"): # passaword sera alterado 
         user.password = data.get("password")
@@ -88,6 +88,18 @@ def update_user(user_id):
     
     return jsonify({"message":"Falha ao atualizar senha"}), 400
 
+# == ROTA DE DELETAR USUARIO ==
+@app.route('/user/<int:user_id>', methods=["DELETE"])
+@login_required
+def delete_user(user_id):
+    user = User.query.get(user_id)
+
+    if user and user.id != current_user.id:  # Impede que o usuário delete a si mesmo
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify({"message": f"Usuário {user_id} deletado com sucesso"})
+    
+    return jsonify({"message":"Deleção invalida!!"}), 400
 
 @app.route('/')
 def teste():
