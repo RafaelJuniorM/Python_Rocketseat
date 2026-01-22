@@ -6,7 +6,7 @@ from flask_login import LoginManager, login_user, current_user, logout_user, log
 
 app = Flask(__name__) # isntancia do Flask 
 app.config['SECRET_KEY'] = "Your_secret_key"
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"  # Configuração do banco de dados SQLite
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:admin123@127.0.0.1:3306/flask-crud"  # Configuração do banco de dados SQLite
 
 
 login_manager = LoginManager()
@@ -100,10 +100,6 @@ def delete_user(user_id):
         return jsonify({"message": f"Usuário {user_id} deletado com sucesso"})
     
     return jsonify({"message":"Deleção invalida!!"}), 400
-
-@app.route('/')
-def teste():
-    return "Isso é um testeeeee!!!"
 
 
 if __name__ == '__main__':
