@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from models.user import User
 from database import db
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
-
+import bcrypt
 
 app = Flask(__name__) # isntancia do Flask 
 app.config['SECRET_KEY'] = "Your_secret_key"
@@ -34,7 +34,7 @@ def login():
         #login
         user = User.query.filter_by(username=username).first() #busca o usuário no banco de dados pelo nome de usuário
 
-        if user and user.password == password: #verifica se o usuário existe e se a senha está correta
+        if user and bcrypt.checkpw(str.encode(password) , str.encode(user.password)): #verifica se o usuário existe e se a senha está correta
             login_user(user)
             return jsonify({"message":"Login realizado com sucesso "})
 
@@ -56,7 +56,9 @@ def create_user():
     password = data.get("password")
 
     if username and password:
-        user = User(username=username, password=password, role="user") # criando um novo usuário e atribuindo os valores recebidos
+        hashed_password = bcrypt.hashpw(str.encode(password), bcrypt.gensalt())  # Aqui você pode adicionar a lógica para hashear a senha
+
+        user = User(username=username, password=hashed_password, role="user") # criando um novo usuário e atribuindo os valores recebidos
         db.session.add(user) # adicionando o novo usuário à sessão do banco de dados
         db.session.commit() # salvando as alterações no banco de dados
         return jsonify({"message":"Usuário criado com sucesso"})
