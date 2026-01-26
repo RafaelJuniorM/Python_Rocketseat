@@ -26,4 +26,4 @@ Projetado para armazenamento, recuperação e gerenciamento de informações.
 - Boa para aprendizado; 
 - Não adequado para produções reais;
 
-Continuar aula em 1:17:50
+Continuar aula em 1:42:00
