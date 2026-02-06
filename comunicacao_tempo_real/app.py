@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 from data.database import db
 from models.payments import Payments
 from datetime import datetime, timedelta
@@ -36,7 +36,10 @@ def create_pix_payment():
                     "payment": new_payment.to_dict()}), 201
 
 
-
+#criando rota para pega o qr code
+@app.route('/payments/pix/qr_code/<file_name>', methods=['GET'])
+def get_qrcode(file_name):
+    return send_file(f"static/img/{file_name}.png", mimetype='image/png')
 
 
 
