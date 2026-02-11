@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, send_file
+from flask import Flask, jsonify, request, send_file, render_template
 from data.database import db
 from models.payments import Payments
 from datetime import datetime, timedelta
@@ -41,13 +41,6 @@ def create_pix_payment():
 def get_qrcode(file_name):
     return send_file(f"static/img/{file_name}.png", mimetype='image/png')
 
-
-
-
-
-
-
-
 # confirmar pagamento - webhook
 @app.route('/payments/pix/confirmation', methods=['POST'])
 def pix_confirmation():
@@ -56,7 +49,17 @@ def pix_confirmation():
 # mostrar pagina de pagamento - conexao com sockets 
 @app.route('/payments/pix/<int:payment_id>', methods=['GET'])
 def payment_pix_page(payment_id):
-    return 'pagamento pix'
+
+    payment = Payments.query.get(payment_id)
+
+    if not payment:
+        return render_template('404.html')
+
+    return render_template('payment.html',
+                           payment=payment.id,
+                           value=payment.value,
+                           host='http://127.0.0.1:5000/',
+                           qr_code=payment.qr_code)
 
 if __name__ == '__main__':
     app.run(debug=True)
